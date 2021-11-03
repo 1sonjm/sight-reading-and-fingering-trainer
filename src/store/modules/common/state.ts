@@ -11,6 +11,9 @@ export type Common = {
 		isOn: boolean
 		message: string | undefined
 	}
+	menu:{
+		isOpen: boolean
+	}
 	locale: Locale
 	location: Location
 	isDarkMode: boolean
@@ -20,6 +23,9 @@ export const state: Common = {
 	loading: {
 		isOn: false,
 		message: undefined,
+	},
+	menu:{
+		isOpen: false,
 	},
 	locale: Locale.ko,
 	location: {

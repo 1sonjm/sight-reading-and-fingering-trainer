@@ -1,8 +1,7 @@
 <template>
 	<div id="home">
 		<img alt="Vue logo" src="@/assets/logo.png">
-		{{ t('hello') }}<br>
-		{{ t('test') }}
+    <button @click="menuToggle">메뉴토글</button>
 	</div>
 </template>
 
@@ -14,6 +13,7 @@ import {
 import { useLogger } from 'vue-logger-plugin'
 import { useI18n } from 'vue-i18n'
 import dayjs from 'dayjs'
+import store from '@/store'
 
 export default defineComponent({
 	name: 'Home',
@@ -24,10 +24,15 @@ export default defineComponent({
 		const { t } = useI18n()
 		const now = ref(dayjs())
 
+    const menuToggle = ()=>{
+      store.commit('ToggleMenu')
+    }
+
 		return {
 			log,
 			t,
 			now,
+      menuToggle,
 		}
 	},
 })

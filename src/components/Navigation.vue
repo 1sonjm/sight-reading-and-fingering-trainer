@@ -12,7 +12,7 @@
 		</div>
 
 		<ul class="dropdown__items menuList">
-			<li><router-link to="/fingering">{{ t('fingering') }}</router-link></li>
+			<li><router-link to="/fingering">{{ t('menu.fingering') }}</router-link></li>
 			<li><router-link to="/sightReading">{{ t('menu.sightReading') }}</router-link></li>
 		</ul>
 
@@ -30,9 +30,11 @@
 <script lang="ts">
 import {
 	defineComponent,
+	computed,
 } from 'vue'
 import { useLogger } from 'vue-logger-plugin'
 import { useI18n } from 'vue-i18n'
+import store from '@/store'
 
 export default defineComponent({
 	name: 'Navigation',
@@ -43,10 +45,12 @@ export default defineComponent({
 	setup() {
 		const log = useLogger()
 		const { t } = useI18n()
+		const isMenuOpen = computed(() => store.state.common.menu.isOpen)
 
 		return {
 			log,
 			t,
+			isMenuOpen,
 		}
 	},
 })
