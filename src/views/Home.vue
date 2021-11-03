@@ -1,18 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+	<div id="home">
+		<img alt="Vue logo" src="@/assets/logo.png">
+		{{ t('hello') }}<br>
+		{{ t('test') }}
+	</div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
-@Options({
-  components: {
-    HelloWorld,
-  },
+import {
+	defineComponent, ref,
+} from 'vue'
+import { useLogger } from 'vue-logger-plugin'
+import { useI18n } from 'vue-i18n'
+import dayjs from 'dayjs'
+
+export default defineComponent({
+	name: 'Home',
+	components: {
+	},
+	setup() {
+		const log = useLogger()
+		const { t } = useI18n()
+		const now = ref(dayjs())
+
+		return {
+			log,
+			t,
+			now,
+		}
+	},
 })
-export default class Home extends Vue {}
 </script>
+
+<style lang="scss">
+
+</style>

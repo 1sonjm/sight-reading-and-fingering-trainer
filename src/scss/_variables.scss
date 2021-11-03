@@ -1,0 +1,24 @@
+// Breakpoints
+$breakpoint-mobile: 360px;
+$breakpoint-tablet: 720px;
+$breakpoint-desktop: 1024px;
+
+// Color
+$color-point-primary: rgb(140,78,43);
+$color-point-primary-lighten: rgb(191,135,86);
+$color-point-base: rgb(190,204,216);
+$color-point-secondary-lighten: rgb(134,151,165);
+$color-point-secondary: rgb(81,96,140);
+
+$color-base-border: rgb(100, 100, 100);
+$color-base-background: rgb(240, 240, 240);
+$color-content-background: darken($color-base-background, 5%);
+
+$color-base-light: rgba(240, 240, 240);
+$color-reverse-light: rgba(10, 10, 10);
+
+$color-base-dark: rgb(39, 37, 37);
+$color-reverse-dark: rgba(210, 210, 210);
+
+// size
+$size-header-height: 5em;
