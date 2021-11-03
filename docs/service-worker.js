@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.d192be65dd8f5dec17e9e49b51840a45.js"
+  "/sight-reading-and-fingering-trainer/precache-manifest.4fa4130eae09a4d1ff6cf33d58749c10.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "sight-reading-and-fingering-trainer-vue"});
