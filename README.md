@@ -1,5 +1,5 @@
-# sight-reading-and-fingering-trainer-vue
-
+# [Sight Reading and Fingering Trainer](https://1sonjm.github.io/sight-reading-and-fingering-trainer/)
+[참고1](https://sightreading.training/)
 ## Project setup
 ```
 npm install

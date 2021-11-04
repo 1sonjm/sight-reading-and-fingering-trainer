@@ -5,7 +5,9 @@
 		<section class="menu">
 			<Navigation/>
 
-			<router-link to="/" class="logo"></router-link>
+			<router-link to="/" class="logo">
+				<img src="@/assets/logo.png">
+			</router-link>
 
 			<div class="darkSwitch">
 				<DarkmodeSwitch/>
@@ -47,29 +49,27 @@ export default defineComponent({
 
 #header{
 	width: 100%;
-	height: $size-header-height;
 	position: relative;
 	.menu{
+		margin: auto;
 		display: flex;
 		justify-content: center;
 		padding-top: 0.2em;
 		.logo{
-			background: url('~@/assets/logo.png') no-repeat center center;
-			display: block;
-			width: 30%;
-			height: 3rem;
+			flex: auto;
 			cursor: pointer;
-			margin: auto;
+			height: $size-header-height;
+			img{
+				height: 100%;
+			}
 		}
 		.darkSwitch{
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin-right: 1em;
 		}
 	}
 	.menuLine{
-		width: calc(100% - 2em);
 		margin-top: 0.2em;
 	}
 }
