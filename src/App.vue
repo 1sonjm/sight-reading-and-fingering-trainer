@@ -57,15 +57,17 @@ export default defineComponent({
 	src: url('../public/font/mapo/MapoPeacefull.woff2');
 }
 
-html, body{
+*{
+	box-sizing: border-box;
 	position: relative;
+}
+html, body{
 	height: 100%;
 	padding: 0;
 	margin: 0;
 	text-align: center;
 }
 ul, li, p{
-	position: relative;
 	padding: 0;
 	margin: 0;
 }
