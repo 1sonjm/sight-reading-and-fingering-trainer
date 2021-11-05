@@ -6,7 +6,7 @@
 			@click="toggleDarkMode">
 			<div class="image">
 				<i class="sun">
-					<img src="@/assets/icon/moon.svg"/>
+					<img src="@/assets/icon/sun.svg"/>
 				</i>
 				<i class="moon">
 					<img src="@/assets/icon/moon.svg"/>
@@ -89,13 +89,13 @@ export default defineComponent({
 				&.sun{
 					filter: invert(.5) sepia(1) saturate(5) hue-rotate(0deg);
 					img{
-						width: 57%;
+						width: 47%;
 					}
 				}
 				&.moon{
 					filter: invert(.5) sepia(1) saturate(4) hue-rotate(175deg);
 					img{
-						width: 47%;
+						width: 42%;
 					}
 				}
 			}

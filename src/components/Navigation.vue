@@ -1,29 +1,25 @@
 <template>
 	<nav id="navigation" class="dropdown">
-		<input
-			type="checkbox"
-			id="dropdown"
-			v-model="isMenuOpen">
-		<label class="dropdown__face" for="dropdown">
-			<div class="dropdown__arrow"></div>
-		</label>
-
-		<div class="dropdown__items search">
+		<button
+			id="navigationToggleButton"
+			:class="{on:isMenuOpen}"
+			@click="toggleMenu">
+			<p></p>
+			<p></p>
+			<p></p>
+		</button>
+		<div
+			id="navigationArea"
+			:class="{on:isMenuOpen}">
+			<ul>
+				<li>
+					<router-link to="/fingering">{{ t('menu.fingering') }}</router-link>
+				</li>
+				<li>
+					<router-link to="/sightReading">{{ t('menu.sightReading') }}</router-link>
+				</li>
+			</ul>
 		</div>
-
-		<ul class="dropdown__items menuList">
-			<li><router-link to="/fingering">{{ t('menu.fingering') }}</router-link></li>
-			<li><router-link to="/sightReading">{{ t('menu.sightReading') }}</router-link></li>
-		</ul>
-
-		<svg>
-			<filter id="goo">
-				<feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-				<feColorMatrix in="blur" type="matrix"
-					values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-				<feBlend in="SourceGraphic" in2="goo" />
-			</filter>
-		</svg>
 	</nav>
 </template>
 
@@ -46,11 +42,13 @@ export default defineComponent({
 		const log = useLogger()
 		const { t } = useI18n()
 		const isMenuOpen = computed(() => store.state.common.menu.isOpen)
+		const toggleMenu = () => store.commit('ToggleMenu')
 
 		return {
 			log,
 			t,
 			isMenuOpen,
+			toggleMenu,
 		}
 	},
 })
@@ -58,95 +56,76 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/scss/_mixin";
-.dropdown {
-	z-index: 1;
-	width: 80px;
-	left: 0;
-	top: 0;
-	filter: url(#goo);
 
-	&__face,
-	&__items {
-		background-color: #fff;
-		padding: 20px;
-		border-radius: 25px;
-	}
 
-	&__face {
-		display: block;
+#navigation{
+	position: relative;
+	text-align: left;
+	#navigationToggleButton{
 		position: relative;
-		padding: 5px;
-		height: 28px;
-		width: 28px;
-		left: 20px;
-		top: 5px;
-	}
-
-	&__items {
+		display: inline-block;
+		background: $color-point-secondary-lighten;
+		border: none;
+		border-radius: 50%;
+		width: $size-header-height;
+		height: $size-header-height;
+		z-index: 1000;
 		margin: 0;
-		position: absolute;
-		left: 10px;
-		top: 50%;
-		width: 100%;
-		column-count: 5;
-		list-style: none;
-		list-style-type: none;
-		justify-content: space-between;
-		visibility: hidden;
-		z-index: -1;
-		opacity: 0;
-		transition: all 0.3s cubic-bezier(0.93, 0.88, 0.1, 0.8);
-
-		&::before {
-			content: "";
-			background-color: #fff;
+		transition: ease 0.2s;
+		transition-property: top;
+		p{
+			display: block;
+			width: 60%;
 			position: absolute;
-			bottom: 100%;
-			left: 8%;
-			height: 18px;
-			width: 15px;
-		}
-	}
-
-	&__arrow {
-		border-bottom: 2px solid #000;
-		border-right: 2px solid #000;
-		position: absolute;
-		top: 50%;
-		right: 50%;
-		width: 10px;
-		height: 10px;
-		transform: rotate(45deg) translateY(-50%);
-		transform-origin: right;
-	}
-
-	input[type="checkbox"] {
-		display: none;
-
-		&:checked ~ .dropdown__items {
-			visibility: visible;
-			opacity: 1;
-			&.search{
-				top: calc(100% + 14px);
-				width: 300px;
+			height: 2px;
+			border-radius: 3px;
+			background-color: #fff;
+			margin: 0;
+			left: 5px;
+			transition: ease 0.2s;
+			transition-property: top, transform, opacity;
+			&:nth-child(1){
+				top: 29%;
 			}
-			&.menuList{
-				top: calc(100% + 101px);
-				width: 500px;
-				li{
-					a{
-						font-weight: bold;
-						color: #2c3e50;
-						&.router-link-exact-active {
-							color: #42b983;
-						}
-					}
+			&:nth-child(2){
+				top: 45%;
+			}
+			&:nth-child(3){
+				top: 62%;
+			}
+		}
+		&.on{
+			p{
+				&:nth-child(1){
+					transform: rotateZ(-45deg);
+					top: 50%;
+				}
+				&:nth-child(2){
+					opacity: 0;
+				}
+				&:nth-child(3){
+					transform: rotateZ(45deg);
+					top: 50%;
 				}
 			}
 		}
 	}
-	svg {
-		display: none;
+	#navigationArea{
+		z-index: 1;
+		position: fixed;
+		background: $color-point-secondary-lighten;
+		top: $size-header-height + 0.5em;
+		left: -100%;
+		opacity: 0;
+		transition: 0.5s ease;
+		transition-property: opacity top;
+		&.on{
+			left: 0;
+			opacity: 1;
+		}
+		ul{
+			list-style: none;
+		}
 	}
 }
 </style>
