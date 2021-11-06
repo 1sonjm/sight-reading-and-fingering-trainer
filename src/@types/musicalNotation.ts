@@ -22,7 +22,7 @@ const ClefSet = {
   },
 }
 
-type NoteCode = '1' | '1/2' | '1/4' | '1/8' | '1/16' | '1/32'
+type NoteCode = '4' | '2' | '1' | '1_2' | '1_4' | '1_8' | '1_16' | '1_32' | '1_64'
 interface NoteType{
   i18n: string
   image: string
@@ -43,39 +43,39 @@ const NoteSet = {
     i18n: 'note.1',
     image: 'note_1.svg',
   },
-  '1/2': {
-    code: '1/2',
-    i18n: 'note.1/2',
+  '1_2': {
+    code: '1_2',
+    i18n: 'note.1_2',
     image: 'note_1.2.svg',
   },
-  '1/4': {
-    code: '1/4',
-    i18n: 'note.1/4',
+  '1_4': {
+    code: '1_4',
+    i18n: 'note.1_4',
     image: 'note_1.4.svg',
   },
-  '1/8': {
-    code: '1/8',
-    i18n: 'note.1/8',
+  '1_8': {
+    code: '1_8',
+    i18n: 'note.1_8',
     image: 'note_1.8.svg',
   },
-  '1/16': {
-    code: '1/16',
-    i18n: 'note.1/16',
+  '1_16': {
+    code: '1_16',
+    i18n: 'note.1_16',
     image: 'note_1.16.svg',
   },
-  '1/32': {
-    code: '1/32',
-    i18n: 'note.1/32',
+  '1_32': {
+    code: '1_32',
+    i18n: 'note.1_32',
     image: 'note_1.32.svg',
   },
-  '1/64': {
-    code: '1/64',
-    i18n: 'note.1/64',
+  '1_64': {
+    code: '1_64',
+    i18n: 'note.1_64',
     image: 'note_1.64.svg',
   },
 }
 
-type RestCode = '4' | '2' | '1' | '1/2' | '1/4' | '1/8' | '1/16' | '1/32' | '1/64'
+type RestCode = '4' | '2' | '1' | '1_2' | '1_4' | '1_8' | '1_16' | '1_32' | '1_64'
 interface RestType{
   i18n: string
   image: string
@@ -96,35 +96,79 @@ const RestSet = {
     i18n: 'rest.1',
     image: 'rest_1.svg',
   },
-  '1/2': {
-    code: '1/2',
-    i18n: 'rest.1/2',
+  '1_2': {
+    code: '1_2',
+    i18n: 'rest.1_2',
     image: 'rest_1.2.svg',
   },
-  '1/4': {
-    code: '1/4',
-    i18n: 'rest.1/4',
+  '1_4': {
+    code: '1_4',
+    i18n: 'rest.1_4',
     image: 'rest_1.4.svg',
   },
-  '1/8': {
-    code: '1/8',
-    i18n: 'rest.1/8',
+  '1_8': {
+    code: '1_8',
+    i18n: 'rest.1_8',
     image: 'rest_1.8.svg',
   },
-  '1/16': {
-    code: '1/16',
-    i18n: 'rest.1/16',
+  '1_16': {
+    code: '1_16',
+    i18n: 'rest.1_16',
     image: 'rest_1.16.svg',
   },
-  '1/32': {
-    code: '1/32',
-    i18n: 'rest.1/32',
+  '1_32': {
+    code: '1_32',
+    i18n: 'rest.1_32',
     image: 'rest_1.32.svg',
   },
-  '1/64': {
-    code: '1/64',
-    i18n: 'rest.1/64',
+  '1_64': {
+    code: '1_64',
+    i18n: 'rest.1_64',
     image: 'rest_1.64.svg',
+  },
+}
+
+type PitchCode = 'G' | 'F' | 'C'
+interface PitchType{
+  code: string
+  i18n: string
+  position: number
+}
+const PitchSet = {
+  A: {
+    code: 'A',
+    i18n: 'pitch.A',
+    position: 1
+  },
+  B: {
+    code: 'B',
+    i18n: 'pitch.B',
+    position: 2
+  },
+  C: {
+    code: 'C',
+    i18n: 'pitch.C',
+    position: 3
+  },
+  D: {
+    code: 'D',
+    i18n: 'pitch.D',
+    position: 4
+  },
+  E: {
+    code: 'E',
+    i18n: 'pitch.E',
+    position: 5
+  },
+  F: {
+    code: 'F',
+    i18n: 'pitch.F',
+    position: 6
+  },
+  G: {
+    code: 'G',
+    i18n: 'pitch.G',
+    position: 7
   },
 }
 
@@ -132,4 +176,5 @@ export {
   ClefCode, ClefType, ClefSet,
   NoteCode, NoteType, NoteSet,
   RestCode, RestType, RestSet,
+  PitchCode, PitchType, PitchSet,
 }
