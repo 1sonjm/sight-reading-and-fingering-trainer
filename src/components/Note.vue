@@ -1,18 +1,22 @@
 <template>
 	<div
 		class="length"
-		:class="length.code">
+		:class="[
+			'note'+length.code,
+			pitch.code,
+		]">
 		<img :src="require(`@/assets/icon/musicalNotation/${length.image}`)">
+		<span class="pitch">{{ t(pitch.i18n) }}</span>
 	</div>
 </template>
 
 <script lang="ts">
-import { NoteType } from '@/@types/musicalNotation'
+import { NoteType, PitchType } from '@/@types/musicalNotation'
 
 import {
 	defineComponent, PropType, computed, ref, Ref,
 } from 'vue'
-import { useLogger } from 'vue-logger-plugin'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
 	name: 'note',
@@ -23,15 +27,19 @@ export default defineComponent({
 			type: Object as PropType<NoteType>,
 			require: true,
 		},
+		pitch: {
+			type: Object as PropType<PitchType>,
+			require: true,
+		},
 		keySignature: {
 			type: String,
 		}
 	},
 	setup(props) {
-		const log = useLogger()
+		const { t } = useI18n()
 
 		return {
-			log,
+			t,
 		}
 	},
 })
@@ -41,8 +49,36 @@ export default defineComponent({
 @import "@/scss/_mixin";
 
 .length{
+	height: 102%;
+	position: relative;
 	img{
 		height: 100%;
+	}
+	.pitch{
+		position: absolute;
+		bottom: 0;
+		right: 0;
+	}
+	&.A{
+		transform: translateY(10%);
+	}
+	&.B{
+		transform: translateY(0%);
+	}
+	&.C{
+		transform: translateY(-10%);
+	}
+	&.D{
+		transform: translateY(-20%);
+	}
+	&.E{
+		transform: translateY(-30%);
+	}
+	&.F{
+		transform: translateY(-40%);
+	}
+	&.G{
+		transform: translateY(-50%);
 	}
 }
 </style>

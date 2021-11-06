@@ -6,7 +6,13 @@
 			@click="changeClef('F')">fffff</button>
 		<button
 			@click="changeClef('C')">ccccc</button>
+		<input
+			type="range"
+			min="1"
+			max="200"
+			v-model="bpm">
 		<Sight
+			:bpm="bpm"
 			:clef="selectedClef"/>
 		<Popper
 			:hover="true"
@@ -47,11 +53,13 @@ export default defineComponent({
 		const changeClef = (type: ClefCode) => {
 			selectedClef.value = ClefSet[type] as ClefType
 		}
+		const bpm = ref(60)
 
 		return {
 			log,
 			selectedClef,
 			changeClef,
+			bpm,
 		}
 	},
 })

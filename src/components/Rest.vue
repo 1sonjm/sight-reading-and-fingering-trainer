@@ -1,7 +1,7 @@
 <template>
 	<div
 		class="length"
-		:class="length.code">
+		:class="'rest'+length.code">
 		<img :src="require(`@/assets/icon/musicalNotation/${length.image}`)">
 	</div>
 </template>
@@ -12,7 +12,7 @@ import { RestType } from '@/@types/musicalNotation'
 import {
 	defineComponent, PropType, computed, ref, Ref,
 } from 'vue'
-import { useLogger } from 'vue-logger-plugin'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
 	name: 'rest',
@@ -25,10 +25,10 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const log = useLogger()
+		const { t } = useI18n()
 
 		return {
-			log,
+			t,
 		}
 	},
 })
