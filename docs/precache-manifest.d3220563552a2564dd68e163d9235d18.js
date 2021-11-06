@@ -1,15 +1,15 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9f69dcf7beefe0080da9",
+    "revision": "85d981a60fd597c1435b",
     "url": "/sight-reading-and-fingering-trainer/css/app.5fb54b8b.css"
-  },
-  {
-    "revision": "eaef376c7e7731b028ff",
-    "url": "/sight-reading-and-fingering-trainer/css/chunk-00985f44.23fcbdc1.css"
   },
   {
     "revision": "096edd9abcb04cec06d7",
     "url": "/sight-reading-and-fingering-trainer/css/chunk-9ccd0fca.0e433876.css"
+  },
+  {
+    "revision": "f3183e9488f7de231ea4",
+    "url": "/sight-reading-and-fingering-trainer/css/chunk-ec3f1bf6.72689283.css"
   },
   {
     "revision": "e42b7341eddf5929569d16142d6f9d65",
@@ -120,16 +120,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sight-reading-and-fingering-trainer/img/sun.abfc2288.svg"
   },
   {
-    "revision": "53d9e99d4d4bf288d3998ab9ea6263ec",
+    "revision": "bd8f53546c327053f9f7d4313b23e97f",
     "url": "/sight-reading-and-fingering-trainer/index.html"
   },
   {
-    "revision": "9f69dcf7beefe0080da9",
-    "url": "/sight-reading-and-fingering-trainer/js/app.da3a7d56.js"
-  },
-  {
-    "revision": "eaef376c7e7731b028ff",
-    "url": "/sight-reading-and-fingering-trainer/js/chunk-00985f44.eda2eb19.js"
+    "revision": "85d981a60fd597c1435b",
+    "url": "/sight-reading-and-fingering-trainer/js/app.f45fb571.js"
   },
   {
     "revision": "4bef5d05abfe02730997",
@@ -140,8 +136,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sight-reading-and-fingering-trainer/js/chunk-9ccd0fca.46fcfc6d.js"
   },
   {
-    "revision": "8405d01b33a2325ae788",
-    "url": "/sight-reading-and-fingering-trainer/js/chunk-vendors.3addf4fe.js"
+    "revision": "f3183e9488f7de231ea4",
+    "url": "/sight-reading-and-fingering-trainer/js/chunk-ec3f1bf6.3ff862ba.js"
+  },
+  {
+    "revision": "cccf7b3ed77142ae6686",
+    "url": "/sight-reading-and-fingering-trainer/js/chunk-vendors.5175fe38.js"
   },
   {
     "revision": "1ed0244c19b0bf0014463dccb9bc3a99",
