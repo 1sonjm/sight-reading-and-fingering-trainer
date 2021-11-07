@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "85d981a60fd597c1435b",
+    "revision": "706edd31d2166242840a",
     "url": "/sight-reading-and-fingering-trainer/css/app.5fb54b8b.css"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sight-reading-and-fingering-trainer/css/chunk-9ccd0fca.0e433876.css"
   },
   {
-    "revision": "f3183e9488f7de231ea4",
-    "url": "/sight-reading-and-fingering-trainer/css/chunk-ec3f1bf6.72689283.css"
+    "revision": "65321dd25359358e6c76",
+    "url": "/sight-reading-and-fingering-trainer/css/chunk-f4894c36.c2131e8a.css"
   },
   {
     "revision": "e42b7341eddf5929569d16142d6f9d65",
@@ -120,12 +120,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sight-reading-and-fingering-trainer/img/sun.abfc2288.svg"
   },
   {
-    "revision": "bd8f53546c327053f9f7d4313b23e97f",
+    "revision": "bc2238863aac2fa8680627bb70b7bd4a",
     "url": "/sight-reading-and-fingering-trainer/index.html"
   },
   {
-    "revision": "85d981a60fd597c1435b",
-    "url": "/sight-reading-and-fingering-trainer/js/app.f45fb571.js"
+    "revision": "706edd31d2166242840a",
+    "url": "/sight-reading-and-fingering-trainer/js/app.d1423dcf.js"
   },
   {
     "revision": "4bef5d05abfe02730997",
@@ -136,8 +136,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/sight-reading-and-fingering-trainer/js/chunk-9ccd0fca.46fcfc6d.js"
   },
   {
-    "revision": "f3183e9488f7de231ea4",
-    "url": "/sight-reading-and-fingering-trainer/js/chunk-ec3f1bf6.3ff862ba.js"
+    "revision": "65321dd25359358e6c76",
+    "url": "/sight-reading-and-fingering-trainer/js/chunk-f4894c36.bbfdd41c.js"
   },
   {
     "revision": "cccf7b3ed77142ae6686",
