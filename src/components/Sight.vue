@@ -5,11 +5,13 @@
 				<img src="@/assets/icon/musicalNotation/note_1.4.svg">
 				= {{ bpm }}
 			</p>
-			<div class="noteSlide">
+			<div
+				class="noteSlide"
+				:style="{transform: `translateX(-${noteTermRate * moveTimer}px)`}">
 				<i
 					v-for="(code, index) in noteQueue"
 					:key="index"
-					:style="{transform: `translateX(${sightWdith*index - moveTimer}px)`}">
+					:style="{transform: `translateX(${sightWdith * index}px)`}">
 					<template v-if="code.type === 'note'">
 						<Note
 							:length="code.length"
@@ -38,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { ClefType, NoteSet, PitchSet, PitchType, RestSet } from '@/@types/musicalNotation'
+import { ClefType, NoteEntry, NoteSet, PitchSet, PitchType, RestEntry, RestSet } from '@/@types/musicalNotation'
 import Note from '@/components/Note.vue'
 import Rest from '@/components/Rest.vue'
 
@@ -48,6 +50,7 @@ import {
 	onMounted, onUnmounted,
 } from 'vue'
 import { useLogger } from 'vue-logger-plugin'
+import store from '@/store'
 
 export default defineComponent({
 	name: 'sight',
@@ -69,46 +72,88 @@ export default defineComponent({
 		const log = useLogger()
 		const noteQueue = ref([
 			{type: 'note',length:NoteSet['1_2'],pitch:PitchSet.A},
-			{type: 'rest',length:RestSet['1_4']},
+			// {type: 'rest',length:RestSet['1_4']},
 			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.D,keySignature:'#'},
 			{type: 'note',length:NoteSet['1_8'],pitch:PitchSet.B},
 			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.F},
 			{type: 'note',length:NoteSet['1'],pitch:PitchSet.G},
-		]);
+		// ]) as Ref<Array<NoteEntry | RestEntry>>;
+		]) as Ref<Array<NoteEntry>>;
+		// const wo = new Worker('@/plugins/metronome.js');
+		// const workerTest = () => {
+		// 	if(window.Worker){
+		// 		console.log(1111)
+		// 		wo.postMessage('start')
+		// 		wo.postMessage({interval: 10})
+		// 	}
+		// }
+
+		// 소리 출력
+		const context = new AudioContext()
+    let o = null
+    let g = null
+		const noteSound = computed(() => store.state.common.noteSound)
 
 		// 너비값 설정
 		const sightWdith = ref(0)
+		const noteTermRate = ref(0)
 		const setWidth = () => {
 			const sightElement = document.getElementById('sight')
 			if(sightElement){
 				sightWdith.value = sightElement.offsetWidth / 10
+				noteTermRate.value = sightWdith.value / noteTerm.value * 10
 			}
 		}
     onMounted(setWidth)
 		window.addEventListener('resize', setWidth)
 
 		// 노트 슬라이드
-		const entry = Object.values(PitchSet);
+
+		const entry = Object.values(PitchSet)
+		const noteTerm = ref(60000 / props.bpm)
 		const moveTimer = ref(0)
-		const bpmSpeed = ref(props.bpm / 60)
-		const interval = setInterval(() => {
-			if(moveTimer.value > 100){
-				noteQueue.value.splice(0, 1)
+		let millisecond = 0
+		const interval = setTimeout(function run() {
+			if(millisecond >= noteTerm.value){
+				const note = noteQueue.value.splice(0, 1)
 				// 데이터 추가
-				noteQueue.value.push({type: 'note',length:NoteSet['1'],pitch:entry[Math.floor(Math.random() * (6 - 1))]})
+				const item:NoteEntry = {type: 'note',length:NoteSet['1'],pitch:entry[Math.floor(Math.random() * (6 - 1))]}
+				noteQueue.value.push(item)
+
+				// 사운드
+				if(noteSound.value && note[0]){
+					o = context.createOscillator()
+					g = context.createGain()
+					o.type = 'sine'
+					o.connect(g)
+					o.frequency.value = note[0].pitch.frequency
+					g.connect(context.destination)
+					o.start(0)
+					g.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.75)
+				}
+
+				// 타이머 초기화
 				moveTimer.value = 0
+				millisecond = 0
 			} else {
-				moveTimer.value += bpmSpeed.value
+				moveTimer.value += 1
 			}
-		}, 16)
-		watch(() => props.bpm, () => bpmSpeed.value = props.bpm / 60)
-		onUnmounted(() => clearInterval(interval))
+			millisecond += 10
+			setTimeout(run, 10);
+		}, 10)
+		watch(() => props.bpm, () => {
+			noteTerm.value = 60000 / props.bpm
+			noteTermRate.value = sightWdith.value / noteTerm.value * 10
+		})
+		onUnmounted(() => clearTimeout(interval))
 
 		return {
 			log,
 			noteQueue,
 			sightWdith,
 			moveTimer,
+			noteTerm,
+			noteTermRate,
 		}
 	},
 })
@@ -123,6 +168,7 @@ export default defineComponent({
 	margin: 6% 0;
 	.noteLine{
 		height: 100%;
+		overflow-x: clip;
 		.bpm{
 			position: absolute;
 			text-align: left;
@@ -137,6 +183,7 @@ export default defineComponent({
 			height: 100%;
 			position: absolute;
 			top: 0;
+			left: 10%;
 			i{
 				height: 100%;
 				top: -3%;

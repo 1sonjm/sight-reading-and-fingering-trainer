@@ -133,43 +133,64 @@ interface PitchType{
   code: string
   i18n: string
   position: number
+  frequency: number
 }
 const PitchSet = {
   A: {
     code: 'A',
     i18n: 'pitch.A',
-    position: 1
+    position: 1,
+    frequency: 220.0
   },
   B: {
     code: 'B',
     i18n: 'pitch.B',
-    position: 2
+    position: 2,
+    frequency: 246.9
   },
   C: {
     code: 'C',
     i18n: 'pitch.C',
-    position: 3
+    position: 3,
+    frequency: 261.6
   },
   D: {
     code: 'D',
     i18n: 'pitch.D',
-    position: 4
+    position: 4,
+    frequency: 293.7
   },
   E: {
     code: 'E',
     i18n: 'pitch.E',
-    position: 5
+    position: 5,
+    frequency: 329.6
   },
   F: {
     code: 'F',
     i18n: 'pitch.F',
-    position: 6
+    position: 6,
+    frequency: 349.2
   },
   G: {
     code: 'G',
     i18n: 'pitch.G',
-    position: 7
+    position: 7,
+    frequency: 392.0
   },
+}
+
+type EntryType = 'note' | 'rest'
+interface Entry{
+  type: EntryType
+}
+interface NoteEntry extends Entry{
+  length: NoteType
+  pitch: PitchType
+  keySignature?: string
+}
+interface RestEntry extends Entry{
+  length: RestType
 }
 
 export {
@@ -177,4 +198,5 @@ export {
   NoteCode, NoteType, NoteSet,
   RestCode, RestType, RestSet,
   PitchCode, PitchType, PitchSet,
+  NoteEntry, RestEntry,
 }
