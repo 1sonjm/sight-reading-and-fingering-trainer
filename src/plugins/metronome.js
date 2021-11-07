@@ -1,3 +1,4 @@
+// https://glitch.com/edit/#!/metronomes?path=metronome.js%3A95%3A27
 postMessage('worker says hi');
 
 let interval

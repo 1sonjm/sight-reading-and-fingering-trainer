@@ -25,6 +25,11 @@
 		<Popper content="This is the Popper content">
 			<button>Trigger element2</button>
 		</Popper>
+		<input
+			type="checkbox"
+			id="noteSound"
+			@change="toggleNoteSound">
+		<label for="noteSound">노트 음</label>
 	</div>
 </template>
 
@@ -38,6 +43,7 @@ import {
 } from 'vue'
 import { useLogger } from 'vue-logger-plugin'
 import Popper from 'vue3-popper';
+import store from '@/store'
 
 export default defineComponent({
 	name: 'SightReadingView',
@@ -55,11 +61,17 @@ export default defineComponent({
 		}
 		const bpm = ref(60)
 
+		const toggleNoteSound = () => {
+			store.commit('ToggleNoteSound')
+			log.debug('ToggleNoteSound', store.state.common.noteSound)
+		}
+
 		return {
 			log,
 			selectedClef,
 			changeClef,
 			bpm,
+			toggleNoteSound,
 		}
 	},
 })

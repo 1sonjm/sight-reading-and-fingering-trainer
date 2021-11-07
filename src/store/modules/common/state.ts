@@ -17,6 +17,7 @@ export type Common = {
 	locale: Locale
 	location: Location
 	isDarkMode: boolean
+	noteSound: boolean
 }
 
 export const state: Common = {
@@ -33,4 +34,5 @@ export const state: Common = {
 		longitude: 126.97797791533893,
 	},
 	isDarkMode: false,
+	noteSound: false,
 }
