@@ -10,7 +10,7 @@
 			type="range"
 			min="1"
 			max="200"
-			v-model="bpm">
+			v-model.number="bpm">
 		<Sight
 			:bpm="bpm"
 			:clef="selectedClef"/>
