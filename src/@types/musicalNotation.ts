@@ -1,24 +1,24 @@
-type ClefCode = 'G' | 'F' | 'C'
+type ClefCode = 'treble' | 'alto' | 'bass'
 interface ClefType{
   code: string
   i18n: string
   image: string
 }
 const ClefSet = {
-  G: {
-    code: 'G',
-    i18n: 'clef.g',
+  treble: {
+    code: 'treble',
+    i18n: 'musicalNotation.clef.treble',
     image: 'clef_g.svg',
   },
-  F: {
-    code: 'F',
-    i18n: 'clef.f',
-    image: 'clef_f.svg',
-  },
-  C: {
-    code: 'C',
-    i18n: 'clef.c',
+  alto: {
+    code: 'alto',
+    i18n: 'musicalNotation.clef.alto',
     image: 'clef_alto.svg',
+  },
+  bass: {
+    code: 'bass',
+    i18n: 'musicalNotation.clef.bass',
+    image: 'clef_f.svg',
   },
 }
 
@@ -30,47 +30,47 @@ interface NoteType{
 const NoteSet = {
   '4': {
     code: '4',
-    i18n: 'note.4',
+    i18n: 'musicalNotation.note.4',
     image: 'note_4.svg',
   },
   '2': {
     code: '2',
-    i18n: 'note.2',
+    i18n: 'musicalNotation.note.2',
     image: 'note_2.svg',
   },
   '1': {
     code: '1',
-    i18n: 'note.1',
+    i18n: 'musicalNotation.note.1',
     image: 'note_1.svg',
   },
   '1_2': {
     code: '1_2',
-    i18n: 'note.1_2',
+    i18n: 'musicalNotation.note.1_2',
     image: 'note_1.2.svg',
   },
   '1_4': {
     code: '1_4',
-    i18n: 'note.1_4',
+    i18n: 'musicalNotation.note.1_4',
     image: 'note_1.4.svg',
   },
   '1_8': {
     code: '1_8',
-    i18n: 'note.1_8',
+    i18n: 'musicalNotation.note.1_8',
     image: 'note_1.8.svg',
   },
   '1_16': {
     code: '1_16',
-    i18n: 'note.1_16',
+    i18n: 'musicalNotation.note.1_16',
     image: 'note_1.16.svg',
   },
   '1_32': {
     code: '1_32',
-    i18n: 'note.1_32',
+    i18n: 'musicalNotation.note.1_32',
     image: 'note_1.32.svg',
   },
   '1_64': {
     code: '1_64',
-    i18n: 'note.1_64',
+    i18n: 'musicalNotation.note.1_64',
     image: 'note_1.64.svg',
   },
 }
@@ -83,47 +83,47 @@ interface RestType{
 const RestSet = {
   '4': {
     code: '4',
-    i18n: 'rest.4',
+    i18n: 'musicalNotation.rest.4',
     image: 'rest_4.svg',
   },
   '2': {
     code: '2',
-    i18n: 'rest.2',
+    i18n: 'musicalNotation.rest.2',
     image: 'rest_2.svg',
   },
   '1': {
     code: '1',
-    i18n: 'rest.1',
+    i18n: 'musicalNotation.rest.1',
     image: 'rest_1.svg',
   },
   '1_2': {
     code: '1_2',
-    i18n: 'rest.1_2',
+    i18n: 'musicalNotation.rest.1_2',
     image: 'rest_1.2.svg',
   },
   '1_4': {
     code: '1_4',
-    i18n: 'rest.1_4',
+    i18n: 'musicalNotation.rest.1_4',
     image: 'rest_1.4.svg',
   },
   '1_8': {
     code: '1_8',
-    i18n: 'rest.1_8',
+    i18n: 'musicalNotation.rest.1_8',
     image: 'rest_1.8.svg',
   },
   '1_16': {
     code: '1_16',
-    i18n: 'rest.1_16',
+    i18n: 'musicalNotation.rest.1_16',
     image: 'rest_1.16.svg',
   },
   '1_32': {
     code: '1_32',
-    i18n: 'rest.1_32',
+    i18n: 'musicalNotation.rest.1_32',
     image: 'rest_1.32.svg',
   },
   '1_64': {
     code: '1_64',
-    i18n: 'rest.1_64',
+    i18n: 'musicalNotation.rest.1_64',
     image: 'rest_1.64.svg',
   },
 }
@@ -136,47 +136,47 @@ interface PitchType{
   frequency: number
 }
 const PitchSet = {
-  A: {
-    code: 'A',
-    i18n: 'pitch.A',
-    position: 1,
-    frequency: 220.0
-  },
-  B: {
-    code: 'B',
-    i18n: 'pitch.B',
-    position: 2,
-    frequency: 246.9
-  },
   C: {
     code: 'C',
-    i18n: 'pitch.C',
-    position: 3,
+    i18n: 'musicalNotation.pitch.C',
+    position: 1,
     frequency: 261.6
   },
   D: {
     code: 'D',
-    i18n: 'pitch.D',
-    position: 4,
+    i18n: 'musicalNotation.pitch.D',
+    position: 2,
     frequency: 293.7
   },
   E: {
     code: 'E',
-    i18n: 'pitch.E',
-    position: 5,
+    i18n: 'musicalNotation.pitch.E',
+    position: 3,
     frequency: 329.6
   },
   F: {
     code: 'F',
-    i18n: 'pitch.F',
-    position: 6,
+    i18n: 'musicalNotation.pitch.F',
+    position: 4,
     frequency: 349.2
   },
   G: {
     code: 'G',
-    i18n: 'pitch.G',
-    position: 7,
+    i18n: 'musicalNotation.pitch.G',
+    position: 5,
     frequency: 392.0
+  },
+  A: {
+    code: 'A',
+    i18n: 'musicalNotation.pitch.A',
+    position: 6,
+    frequency: 440.00
+  },
+  B: {
+    code: 'B',
+    i18n: 'musicalNotation.pitch.B',
+    position: 7,
+    frequency: 493.88
   },
 }
 
@@ -187,7 +187,8 @@ interface Entry{
 interface NoteEntry extends Entry{
   length: NoteType
   pitch: PitchType
-  keySignature?: string
+  octave: number
+  keySignature?: '#' | 'b'
 }
 interface RestEntry extends Entry{
   length: RestType

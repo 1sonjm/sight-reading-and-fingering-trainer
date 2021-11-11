@@ -2,16 +2,16 @@
 	<div
 		class="length"
 		:class="[
-			'note'+length.code,
-			pitch.code,
+			'note'+entry.length.code,
+			entry.pitch.code,
 		]">
-		<img :src="require(`@/assets/icon/musicalNotation/${length.image}`)">
-		<span class="pitch">{{ t(pitch.i18n) }}</span>
+		<img :src="require(`@/assets/icon/musicalNotation/${entry.length.image}`)">
+		<span class="pitch">{{ t(entry.pitch.i18n) }}</span>
 	</div>
 </template>
 
 <script lang="ts">
-import { NoteType, PitchType } from '@/@types/musicalNotation'
+import { NoteEntry } from '@/@types/musicalNotation'
 
 import {
 	defineComponent, PropType, computed, ref, Ref,
@@ -23,17 +23,10 @@ export default defineComponent({
 	components: {
 	},
 	props: {
-		length: {
-			type: Object as PropType<NoteType>,
+		entry: {
+			type: Object as PropType<NoteEntry>,
 			require: true,
 		},
-		pitch: {
-			type: Object as PropType<PitchType>,
-			require: true,
-		},
-		keySignature: {
-			type: String,
-		}
 	},
 	setup(props) {
 		const { t } = useI18n()

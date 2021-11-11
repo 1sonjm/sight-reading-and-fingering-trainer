@@ -1,11 +1,11 @@
 <template>
 	<div id="sightReadingView">
 		<button
-			@click="changeClef('G')">ggggg</button>
+			@click="changeClef(ClefSet.treble.code)">{{ t(ClefSet.treble.i18n) }}</button>
 		<button
-			@click="changeClef('F')">fffff</button>
+			@click="changeClef(ClefSet.alto.code)">{{ t(ClefSet.alto.i18n) }}</button>
 		<button
-			@click="changeClef('C')">ccccc</button>
+			@click="changeClef(ClefSet.bass.code)">{{ t(ClefSet.bass.i18n) }}</button>
 		<input
 			type="range"
 			min="1"
@@ -40,7 +40,9 @@ import { ClefSet, ClefCode, ClefType } from '@/@types/musicalNotation'
 import {
 	computed,
 	defineComponent, Prop, PropType, ref, Ref,
+	onMounted,
 } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useLogger } from 'vue-logger-plugin'
 import Popper from 'vue3-popper';
 import store from '@/store'
@@ -54,20 +56,24 @@ export default defineComponent({
 	props: {
 	},
 	setup(props) {
+		onMounted(() => ClefSet)
+		const { t } = useI18n()
 		const log = useLogger()
-		const selectedClef = ref(ClefSet.G) as Ref<ClefType>
+		const selectedClef = ref(ClefSet.treble) as Ref<ClefType>
 		const changeClef = (type: ClefCode) => {
 			selectedClef.value = ClefSet[type] as ClefType
 		}
 		const bpm = ref(60)
 
+		// TODO 초기값 설정할것
 		const toggleNoteSound = () => {
 			store.commit('ToggleNoteSound')
 			log.debug('ToggleNoteSound', store.state.common.noteSound)
 		}
 
 		return {
-			log,
+			ClefSet,
+			t, log,
 			selectedClef,
 			changeClef,
 			bpm,

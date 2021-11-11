@@ -7,19 +7,20 @@
 			</p>
 			<div
 				class="noteSlide"
+				:class="{
+					altoClef:clef.code === ClefSet.alto.code,
+					bassClef:clef.code === ClefSet.bass.code,
+				}"
 				:style="{transform: `translateX(-${noteTermRate * moveTimer}px)`}">
 				<i
-					v-for="(code, index) in noteQueue"
+					v-for="(entry, index) in entryQueue"
 					:key="index"
 					:style="{transform: `translateX(${sightWdith * index}px)`}">
-					<template v-if="code.type === 'note'">
-						<Note
-							:length="code.length"
-							:pitch="code.pitch"
-							:key-signature="code.keySignature"/>
+					<template v-if="entry.type === 'note'">
+						<Note :entry="entry"/>
 					</template>
 					<template v-else>
-						<Rest :length="code.length"/>
+						<Rest :entry="entry"/>
 					</template>
 				</i>
 			</div>
@@ -40,7 +41,12 @@
 </template>
 
 <script lang="ts">
-import { ClefType, NoteEntry, NoteSet, PitchSet, PitchType, RestEntry, RestSet } from '@/@types/musicalNotation'
+import {
+	ClefType, ClefSet,
+	NoteEntry, NoteSet,
+	PitchSet, PitchType,
+	RestEntry, RestSet
+} from '@/@types/musicalNotation'
 import Note from '@/components/Note.vue'
 import Rest from '@/components/Rest.vue'
 
@@ -69,14 +75,15 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
+		onMounted(() => ClefSet)
 		const log = useLogger()
-		const noteQueue = ref([
-			{type: 'note',length:NoteSet['1_2'],pitch:PitchSet.A},
+		const entryQueue = ref([
+			{type: 'note',length:NoteSet['1_2'],pitch:PitchSet.A,octave:4},
 			// {type: 'rest',length:RestSet['1_4']},
-			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.D,keySignature:'#'},
-			{type: 'note',length:NoteSet['1_8'],pitch:PitchSet.B},
-			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.F},
-			{type: 'note',length:NoteSet['1'],pitch:PitchSet.G},
+			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.D,octave:4,keySignature:'#'},
+			{type: 'note',length:NoteSet['1_8'],pitch:PitchSet.B,octave:4},
+			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.F,octave:4},
+			{type: 'note',length:NoteSet['1'],pitch:PitchSet.G,octave:4},
 		// ]) as Ref<Array<NoteEntry | RestEntry>>;
 		]) as Ref<Array<NoteEntry>>;
 		// const wo = new Worker('@/plugins/metronome.js');
@@ -115,10 +122,10 @@ export default defineComponent({
 		let millisecond = 0
 		const interval = setTimeout(function run() {
 			if(millisecond >= noteTerm.value){
-				const note = noteQueue.value.splice(0, 1)
+				const note = entryQueue.value.splice(0, 1)
 				// 데이터 추가
-				const item:NoteEntry = {type: 'note',length:NoteSet['1'],pitch:entry[Math.floor(Math.random() * (6 - 1))]}
-				noteQueue.value.push(item)
+				const item:NoteEntry = {type: 'note',length:NoteSet['1'],pitch:entry[Math.floor(Math.random() * (6 - 1))],octave:4}
+				entryQueue.value.push(item)
 
 				// 사운드
 				if(noteSound.value && note[0]){
@@ -146,10 +153,12 @@ export default defineComponent({
 			noteTermRate.value = sightWdith.value / noteTerm.value * 10
 		})
 		onUnmounted(() => clearTimeout(interval))
+		// TODO clear 안되는 오류
 
 		return {
+			ClefSet,
 			log,
-			noteQueue,
+			entryQueue,
 			sightWdith,
 			moveTimer,
 			noteTerm,
@@ -184,9 +193,15 @@ export default defineComponent({
 			position: absolute;
 			top: 0;
 			left: 10%;
+			&.altoClef{
+				top: 11%;
+			}
+			&.bassClef{
+				top: 22%;
+			}
 			i{
 				height: 100%;
-				top: -3%;
+				top: 16%;
 				left: 10%;
 				position: absolute;
 			}
@@ -212,17 +227,17 @@ export default defineComponent({
 			img{
 				height: 100%;
 			}
-			&.G{
+			&.treble{
 				height: 130%;
 				top: -21%;
 			}
-			&.F{
-				height: 80%;
-				top: 15%;
-			}
-			&.C{
+			&.alto{
 				height: 79%;
 				top: 20%;
+			}
+			&.bass{
+				height: 80%;
+				top: 15%;
 			}
 		}
 	}
