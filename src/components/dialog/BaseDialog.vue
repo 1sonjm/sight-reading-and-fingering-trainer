@@ -36,11 +36,11 @@ export default defineComponent({
 	props: {
 		modal: {
 			type: Boolean,
-			require: true,
+			required: true,
 		},
 		headerText: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		isTransparent: {
 			type: Boolean,

@@ -1,22 +1,26 @@
 type ClefCode = 'treble' | 'alto' | 'bass'
 interface ClefType{
   code: string
+  baseOctave: number
   i18n: string
   image: string
 }
 const ClefSet = {
   treble: {
     code: 'treble',
+    baseOctave: 4,
     i18n: 'musicalNotation.clef.treble',
     image: 'clef_g.svg',
   },
   alto: {
     code: 'alto',
+    baseOctave: 3,
     i18n: 'musicalNotation.clef.alto',
     image: 'clef_alto.svg',
   },
   bass: {
     code: 'bass',
+    baseOctave: 2,
     i18n: 'musicalNotation.clef.bass',
     image: 'clef_f.svg',
   },
@@ -24,6 +28,7 @@ const ClefSet = {
 
 type NoteCode = '4' | '2' | '1' | '1_2' | '1_4' | '1_8' | '1_16' | '1_32' | '1_64'
 interface NoteType{
+  code: string
   i18n: string
   image: string
 }
@@ -77,6 +82,7 @@ const NoteSet = {
 
 type RestCode = '4' | '2' | '1' | '1_2' | '1_4' | '1_8' | '1_16' | '1_32' | '1_64'
 interface RestType{
+  code: string
   i18n: string
   image: string
 }

@@ -25,7 +25,7 @@ export default defineComponent({
 	props: {
 		entry: {
 			type: Object as PropType<NoteEntry>,
-			require: true,
+			required: true,
 		},
 	},
 	setup(props) {

@@ -17,10 +17,10 @@
 					:key="index"
 					:style="{transform: `translateX(${sightWdith * index}px)`}">
 					<template v-if="entry.type === 'note'">
-						<Note :entry="entry"/>
+						<NoteItem :entry="entry"/>
 					</template>
 					<template v-else>
-						<Rest :entry="entry"/>
+						<RestItem :entry="entry"/>
 					</template>
 				</i>
 			</div>
@@ -47,8 +47,12 @@ import {
 	PitchSet, PitchType,
 	RestEntry, RestSet
 } from '@/@types/musicalNotation'
-import Note from '@/components/Note.vue'
-import Rest from '@/components/Rest.vue'
+import {
+	soundSamples,
+	sampleSet,
+} from '@/@types/soundSamples'
+import NoteItem from '@/components/NoteItem.vue'
+import RestItem from '@/components/RestItem.vue'
 
 import {
 	defineComponent, PropType, ref, Ref,
@@ -57,33 +61,39 @@ import {
 } from 'vue'
 import { useLogger } from 'vue-logger-plugin'
 import store from '@/store'
+import { Interval, Note, Scale } from '@tonaljs/tonal'
+import { Sampler, Transport, Synth, PolySynth } from 'tone'
 
 export default defineComponent({
 	name: 'sight',
 	components: {
-		Note,
-		Rest,
+		NoteItem,
+		RestItem,
 	},
 	props: {
+		isPlay: {
+			type: Boolean,
+			default: false,
+		},
 		bpm: {
 			type: Number,
 			default: 120,
 		},
 		clef: {
 			type: Object as PropType<ClefType>,
-			require: true,
+			required: true,
 		},
 	},
 	setup(props) {
 		onMounted(() => ClefSet)
 		const log = useLogger()
 		const entryQueue = ref([
-			{type: 'note',length:NoteSet['1_2'],pitch:PitchSet.A,octave:4},
+			{type: 'note',length:NoteSet['1_2'],pitch:PitchSet.A,octave:props.clef.baseOctave},
 			// {type: 'rest',length:RestSet['1_4']},
-			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.D,octave:4,keySignature:'#'},
-			{type: 'note',length:NoteSet['1_8'],pitch:PitchSet.B,octave:4},
-			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.F,octave:4},
-			{type: 'note',length:NoteSet['1'],pitch:PitchSet.G,octave:4},
+			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.D,octave:props.clef.baseOctave,keySignature:'#'},
+			{type: 'note',length:NoteSet['1_8'],pitch:PitchSet.B,octave:props.clef.baseOctave},
+			{type: 'note',length:NoteSet['1_4'],pitch:PitchSet.F,octave:props.clef.baseOctave},
+			{type: 'note',length:NoteSet['1'],pitch:PitchSet.G,octave:props.clef.baseOctave},
 		// ]) as Ref<Array<NoteEntry | RestEntry>>;
 		]) as Ref<Array<NoteEntry>>;
 		// const wo = new Worker('@/plugins/metronome.js');
@@ -94,6 +104,71 @@ export default defineComponent({
 		// 		wo.postMessage({interval: 10})
 		// 	}
 		// }
+
+
+		const music = [
+			["C2", "D#2", "G2", "C3", "G2", "D#2"], // Cm (i)
+			["B1", "D2", "G2", "B2", "G2", "D2"], // G (V)
+			["A#1", "D2", "F2", "A#2", "F2", "D2"], // Bb (VII)
+			["A1", "C2", "F2", "A2", "F2", "C2"], // F (V / VII)
+			["G#1", "C2", "D#2", "G#2", "D#2", "C2"], // Ab (VI)
+			["G1", "C2", "D#2", "G2", "D#2", "C2"], // Cm (i)
+			["F#1", "C2", "D#2", "F#2", "D#2", "C2"], // F#dim7 (vii° / V)
+			["G1", "C2", "D2", "G2", "D2", "B1"] // Gsus4 (?) -> G (V)
+		];
+
+		const currentNoteIndex = ref(0)
+    const musicFlat = music.flat();
+		// if (props.isPlay) {
+		// 	Transport.pause();
+		// } else {
+		// 	Transport.start();
+		// }
+    // const sampleMap = new soundSamples(sampleSet.saxophone).sampleMap
+    // Transport.bpm.value = 120;
+    // const sampler = new Sampler(
+    //   sampleMap,
+    //   () => {
+    //     sampler.release = 12;
+    //     sampler.toDestination();
+
+    //     Transport.scheduleRepeat(time => {
+    //       sampler.triggerAttackRelease(musicFlat[currentNoteIndex.value], "8n");
+
+    //       if (++currentNoteIndex.value > musicFlat.length - 1) {
+		// 				currentNoteIndex.value = 0
+		// 			}
+    //     }, "8n")
+    //   },
+    // );
+    const synth = new PolySynth(Synth, {
+			envelope: {
+				attack: 0.02,
+				decay: 0.1,
+				sustain: 0.3,
+				release: 1,
+			}
+		}).toDestination();
+
+    Transport.scheduleRepeat(time => {
+      synth.triggerAttackRelease(musicFlat[currentNoteIndex.value], "8n");
+
+      if (++currentNoteIndex.value > musicFlat.length - 1) {
+				currentNoteIndex.value = 0
+			}
+    }, "8n");
+		watch(() => props.isPlay, (now, prev) => {
+			if (props.isPlay) {
+				Transport.pause();
+			} else {
+				Transport.start();
+			}
+    })
+
+
+
+
+
 
 		// 소리 출력
 		const context = new AudioContext()
@@ -121,32 +196,38 @@ export default defineComponent({
 		const moveTimer = ref(0)
 		let millisecond = 0
 		const interval = setTimeout(function run() {
-			if(millisecond >= noteTerm.value){
-				const note = entryQueue.value.splice(0, 1)
-				// 데이터 추가
-				const item:NoteEntry = {type: 'note',length:NoteSet['1'],pitch:entry[Math.floor(Math.random() * (6 - 1))],octave:4}
-				entryQueue.value.push(item)
+			// TODO 재생설정?
+			if(props.isPlay){
+				if(millisecond >= noteTerm.value){
+					const note = entryQueue.value.splice(0, 1)
+					// 데이터 추가
+					const item:NoteEntry = {type: 'note',length:NoteSet['1'],pitch:entry[Math.floor(Math.random() * (6 - 1))],octave:props.clef.baseOctave}
+					entryQueue.value.push(item)
 
-				// 사운드
-				if(noteSound.value && note[0]){
-					o = context.createOscillator()
-					g = context.createGain()
-					o.type = 'sine'
-					o.connect(g)
-					o.frequency.value = note[0].pitch.frequency
-					g.connect(context.destination)
-					o.start(0)
-					g.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.75)
+					// 사운드
+					// if(noteSound.value && note[0]){
+					// 	o = context.createOscillator()
+					// 	g = context.createGain()
+					// 	o.type = 'sine'
+					// 	o.connect(g)
+					// 	const freq = Note.freq(item.pitch.code + item.octave);
+					// 	if(freq){
+					// 		o.frequency.value = freq
+					// 	}
+					// 	g.connect(context.destination)
+					// 	o.start(0)
+					// 	g.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.75)
+					// }
+
+					// 타이머 초기화
+					moveTimer.value = 0
+					millisecond = 0
+				} else {
+					moveTimer.value += 1
 				}
-
-				// 타이머 초기화
-				moveTimer.value = 0
-				millisecond = 0
-			} else {
-				moveTimer.value += 1
+				millisecond += 10
+				setTimeout(run, 10);
 			}
-			millisecond += 10
-			setTimeout(run, 10);
 		}, 10)
 		watch(() => props.bpm, () => {
 			noteTerm.value = 60000 / props.bpm

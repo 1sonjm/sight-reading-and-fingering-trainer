@@ -1,5 +1,7 @@
 # [Sight Reading and Fingering Trainer](https://1sonjm.github.io/sight-reading-and-fingering-trainer/)
 [참고1](https://sightreading.training/)
+[참고1](https://dev.to/sustained/sforzando-an-app-for-learning-and-experimenting-with-music-theory-harmony-composition-44cm)
+
 ## Project setup
 ```
 npm install

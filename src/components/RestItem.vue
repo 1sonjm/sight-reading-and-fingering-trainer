@@ -21,7 +21,7 @@ export default defineComponent({
 	props: {
 		length: {
 			type: Object as PropType<RestType>,
-			require: true,
+			required: true,
 		},
 	},
 	setup(props) {

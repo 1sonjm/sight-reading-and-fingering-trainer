@@ -12,6 +12,7 @@
 			max="200"
 			v-model.number="bpm">
 		<Sight
+			:is-play="isPlay"
 			:bpm="bpm"
 			:clef="selectedClef"/>
 		<Popper
@@ -30,6 +31,11 @@
 			id="noteSound"
 			@change="toggleNoteSound">
 		<label for="noteSound">노트 음</label>
+		<input
+			type="checkbox"
+			id="isPlay"
+			v-model="isPlay">
+		<label for="isPlay">isPlay</label>
 	</div>
 </template>
 
@@ -64,6 +70,7 @@ export default defineComponent({
 			selectedClef.value = ClefSet[type] as ClefType
 		}
 		const bpm = ref(60)
+		const isPlay = ref(true)
 
 		// TODO 초기값 설정할것
 		const toggleNoteSound = () => {
@@ -78,6 +85,7 @@ export default defineComponent({
 			changeClef,
 			bpm,
 			toggleNoteSound,
+			isPlay,
 		}
 	},
 })
